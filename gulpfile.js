@@ -1,6 +1,10 @@
 var gulp = require("gulp");
 var $ = require("gulp-load-plugins")({ lazy: true });
-var replace = require("gulp-string-replace");
+
+gulp.task("index", async function () {
+  log("Moving Index file");
+  gulp.src("index.html").pipe(gulp.dest("Content"));
+});
 
 gulp.task("styles", async function () {
   log("Compiling SASS");
@@ -49,7 +53,11 @@ function log(msg) {
 }
 
 // For TeamCity
-gulp.task("build", gulp.series("bundlejs", "bundlecss"), async function () {});
+gulp.task(
+  "build",
+  gulp.series("index", "bundlejs", "bundlecss"),
+  async function () {}
+);
 
 gulp.task(
   "default",
